@@ -47,4 +47,13 @@ export class OrganizationsGateway implements OnGatewayConnection {
   findAll() {
     return this.organizationsService.findAll();
   }
+
+  @SubscribeMessage('findOneOrganization')
+  async findOne(@MessageBody() orgId: any): Promise<Organization> {
+
+    const organization = await this.organizationsService.findOne(orgId.id);
+    this.server.emit('oneOrganization', organization); 
+    return organization;
+    
+  }
 }

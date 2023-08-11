@@ -19,4 +19,9 @@ export class OrganizationsService {
   async findAll(): Promise<Organization[]> {
     return await this.organizationModel.find();
   }
+
+  async findOne(id: string): Promise<Organization> {
+    console.log(id);
+    return await this.organizationModel.findById(id); 
+  }
 }
