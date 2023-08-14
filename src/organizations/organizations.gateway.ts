@@ -10,7 +10,7 @@ import { CreateOrganizationDto } from './dto/create-organization.dto';
 import { Server } from 'socket.io';
 import { Organization } from './schema/organization.schema';
 import { Socket } from 'socket.io';
-@WebSocketGateway(3001, {
+@WebSocketGateway(8001, {
   cors: {
     origin: '*',
   },

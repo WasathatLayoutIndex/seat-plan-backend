@@ -1,6 +1,7 @@
 import { Schema } from '@nestjs/mongoose';
 import { Prop } from '@nestjs/mongoose';
 import { SchemaFactory } from '@nestjs/mongoose';
+import { Seat, SeatSchema } from './seat.schema';
 
 @Schema()
 export class Organization {
@@ -13,8 +14,8 @@ export class Organization {
   @Prop()
   showTime: string;
 
-  @Prop()
-  seatPlan: string[];
+  @Prop({ type: [SeatSchema] })
+  seatPlan: Seat[];
 }
 
 export const OrganizationSchema = SchemaFactory.createForClass(Organization);
