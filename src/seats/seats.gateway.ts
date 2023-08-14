@@ -28,6 +28,8 @@ export class SeatsGateway implements OnModuleInit {
   onModuleInit() {
     this.server.on('connection', (socket) => {
       this.socketNew = socket;
+
+      console.log(`Client connected: ${socket.id}`);
     });
   }
 
