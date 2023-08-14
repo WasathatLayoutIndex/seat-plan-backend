@@ -1,3 +1,4 @@
+/* eslint-disable prettier/prettier */
 import {
   WebSocketGateway,
   SubscribeMessage,
@@ -32,21 +33,23 @@ export class SeatsGateway implements OnModuleInit {
 
   @SubscribeMessage('joinRoom')
   onJoinRequest(@MessageBody() room: Room, @ConnectedSocket() client: Socket) {
-    const { accessCode, ShowTime } = room;
-    client.join(`${this.PREFIX}_${accessCode}_${ShowTime}`);
+    const { accessCode, showTime } = room;
+    client.join(`${this.PREFIX}_${accessCode}_${showTime}`);
     console.log(
-      `Client ${client.id} joined room: ${this.PREFIX}_${accessCode}_${ShowTime}`,
+      `Client ${client.id} joined room: ${this.PREFIX}_${accessCode}_${showTime}`,
     );
   }
 
-  @SubscribeMessage('sendJsonPayload')
+  @SubscribeMessage('jsonPayload')
   onSend(@MessageBody() room: Payload) {
-    const { accessCode, ShowTime, payload } = room;
+    const { accessCode, showTime, payload } = room;
 
-    console.log(`sent message to: ${this.PREFIX}_${accessCode}_${ShowTime}`);
+    console.log(`sent message to: ${this.PREFIX}_${accessCode}_${showTime}`);
+
+    console.log(`payload: ${JSON.stringify(payload)}`);
 
     this.server
-      .to(`${this.PREFIX}_${accessCode}_${ShowTime}`)
-      .emit('viewAllDevices', payload);
+      .to(`${this.PREFIX}_${accessCode}_${showTime}`)
+      .emit('jsonPayload', payload);
   }
 }

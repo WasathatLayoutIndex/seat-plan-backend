@@ -1,4 +1,5 @@
+/* eslint-disable prettier/prettier */
 export class Room {
   readonly accessCode: string;
-  readonly ShowTime: string;
+  readonly showTime: string;
 }
