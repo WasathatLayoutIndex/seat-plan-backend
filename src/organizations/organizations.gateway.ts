@@ -1,3 +1,4 @@
+/* eslint-disable prettier/prettier */
 import {
   WebSocketGateway,
   SubscribeMessage,
@@ -21,11 +22,10 @@ export class OrganizationsGateway implements OnGatewayConnection {
 
   constructor(private readonly organizationsService: OrganizationsService) {}
 
-  async handleConnection(client: Socket){
+  async handleConnection(client: Socket) {
     const allOrganizations = await this.organizationsService.findAll();
     client.emit('allOrganizations', allOrganizations);
   }
-
 
   @SubscribeMessage('createOrganization')
   async create(
@@ -50,10 +50,8 @@ export class OrganizationsGateway implements OnGatewayConnection {
 
   @SubscribeMessage('findOneOrganization')
   async findOne(@MessageBody() orgId: any): Promise<Organization> {
-
     const organization = await this.organizationsService.findOne(orgId.id);
-    this.server.emit('oneOrganization', organization); 
+    this.server.emit('oneOrganization', organization);
     return organization;
-    
   }
 }
