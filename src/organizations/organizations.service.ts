@@ -26,12 +26,12 @@ export class OrganizationsService {
     return await this.organizationModel.findById(id);
   }
 
-  async findOneFromName(name: string, accessCode: string, showTime: string): Promise<Organization> {
+  async findOneFromName(
+    name: string,
+    accessCode: string,
+    showTime: string,
+  ): Promise<Organization> {
     console.log(name, accessCode, showTime);
     return await this.organizationModel.findOne({ name, accessCode, showTime });
-  }
-
-  getHello(): any {
-    return 'Hello Worsdfsfs ld!';
   }
 }

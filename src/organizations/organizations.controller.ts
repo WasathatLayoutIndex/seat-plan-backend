@@ -1,8 +1,6 @@
-import { Controller, Get, Param, Header } from '@nestjs/common';
+import { Controller, Get, Param, NotFoundException } from '@nestjs/common';
 import { OrganizationsService } from './organizations.service';
 import { Organization } from './schema/organization.schema';
-import { InjectModel } from '@nestjs/mongoose';
-import { Search } from './entities/search.entity';
 
 @Controller('org')
 export class OrganizationController {
@@ -18,10 +16,15 @@ export class OrganizationController {
     @Param('showTime') showTime: string,
   ): Promise<Organization> {
     console.log(name, accessCode, showTime);
-    return await this.organizationModel.findOneFromName(
+    const res = await this.organizationModel.findOneFromName(
       name,
       accessCode,
       showTime,
     );
+
+    if (!res) {
+      throw new NotFoundException('Organization not found');
+    }
+    return res;
   }
 }
