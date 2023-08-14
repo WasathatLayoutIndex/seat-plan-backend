@@ -1,4 +1,3 @@
-/* eslint-disable prettier/prettier */
 import {
   WebSocketGateway,
   SubscribeMessage,
@@ -11,7 +10,7 @@ import { CreateOrganizationDto } from './dto/create-organization.dto';
 import { Server } from 'socket.io';
 import { Organization } from './schema/organization.schema';
 import { Socket } from 'socket.io';
-@WebSocketGateway({
+@WebSocketGateway(8001, {
   cors: {
     origin: '*',
   },
@@ -22,10 +21,11 @@ export class OrganizationsGateway implements OnGatewayConnection {
 
   constructor(private readonly organizationsService: OrganizationsService) {}
 
-  async handleConnection(client: Socket) {
+  async handleConnection(client: Socket){
     const allOrganizations = await this.organizationsService.findAll();
     client.emit('allOrganizations', allOrganizations);
   }
+
 
   @SubscribeMessage('createOrganization')
   async create(
@@ -50,8 +50,10 @@ export class OrganizationsGateway implements OnGatewayConnection {
 
   @SubscribeMessage('findOneOrganization')
   async findOne(@MessageBody() orgId: any): Promise<Organization> {
+
     const organization = await this.organizationsService.findOne(orgId.id);
-    this.server.emit('oneOrganization', organization);
+    this.server.emit('oneOrganization', organization); 
     return organization;
+    
   }
 }

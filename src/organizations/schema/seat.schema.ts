@@ -6,6 +6,9 @@ export class Seat{
     seatNumber: string;
 
     @Prop()
+    tempId: string;
+
+    @Prop()
     isBooked: boolean;
 
     @Prop()
